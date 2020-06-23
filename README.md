@@ -1,2 +1,5 @@
 # semgrep-rules
-My custom semgrep rules
+
+Semgrem example rules + My custom rules
+
+
