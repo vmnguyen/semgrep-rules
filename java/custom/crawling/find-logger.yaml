@@ -1,0 +1,13 @@
+rules:
+- id: java-find-logger
+  languages: [java]
+  severity: ERROR
+  patterns:
+    - pattern-either:
+      - pattern: |
+          LOG.info($VALUE1 + $VALUE2)
+      - pattern: |
+          LOG.info($VALUE1 + $VALUE2 + $VALUE3)
+  # message to display to user. Can have metavariables that will get filled out.
+  message: |
+    $VALUE1, $VALUE2, $VALUE3
