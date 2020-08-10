@@ -1,0 +1,35 @@
+rules:
+- id: java-spring-routes
+  languages: [java]
+  severity: INFO
+  patterns:
+    - pattern-inside: |
+        @Controller
+        public class $CONTROLLER { ... }
+    - pattern-either:
+      - pattern: |
+          @RequestMapping(value = $VALUE, method = $HTTPMETHOD)
+          @Authorize($AUTHZ)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD)
+          @Authorize($AUTHZ)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD, value = $PATH)
+          @Authorize($AUTHZ)
+          public $RETURNTYPE $METHOD(...) { ...}        
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD)
+          public $RETURNTYPE $METHOD(...) { ...}           
+      - pattern: |
+          @RequestMapping(value = $PATH, method = $HTTPMETHOD)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @Secured($SECURE)
+          @PostMapping($PATH)
+          public $RETURNTYPE $METHOD(...) { ...}
+  # message to display to user. Can have metavariables that will get filled out.
+  message: |
+    $METHOD(),$PATH,$HTTPMETHOD,$SECURE
+ 
