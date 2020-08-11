@@ -1,0 +1,31 @@
+rules:
+- id: get-request-mapping-declareation
+  languages: [java]
+  severity: INFO
+  pattern-either:
+    - pattern: |
+        public $TYPE $FUNCTIONNAME(...){
+          ...
+          flexibleSearchService.search(query, params);
+          ...
+        }
+    - pattern: |
+        public $TYPE $FUNCTIONNAME(...){
+          ...
+          final SearchResult<BrandCategoryModel> $VARIABLE = flexibleSearchService.search($QUERY);
+          ...
+        }
+    - pattern: |
+        public $TYPE $FUNCTIONNAME(...){
+          ...
+          getFlexibleSearchService().searchUnique(query);
+          ...
+        }
+    - pattern: |
+        public $TYPE $FUNCTIONAME(...){
+          ...
+          FlexibleSearchQuery fQuery = new FlexibleSearchQuery($SOMETHING);
+          ...
+        }
+  message: |
+    $FUNCTIONNAME, $VARIABLE, $QUERY

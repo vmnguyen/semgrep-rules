@@ -1,0 +1,15 @@
+rules:
+- id: get-request-mapping-declareation
+  languages: [java]
+  severity: INFO
+  pattern-either:
+    - pattern: |
+        public $TYPE $FUNCTIONNAME(...){
+          StringBuilder $VARIABLE = new StringBuilder($XYZ);
+          ...
+          $ABC.append($SOMETHING);
+          ...
+          $SOMETHINGELSE = new FlexibleSearchQuery($ABCD);
+        }
+  message: |
+    Function: $FUNCTIONNAME, name: $VARIABLE
