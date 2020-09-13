@@ -1,0 +1,32 @@
+rules:
+- id: java-spring-routes
+  languages: [java]
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD)
+          @Authorize($AUTHZ)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD, value = $PATH)
+          @Authorize($AUTHZ)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @RequestMapping(method = $HTTPMETHOD)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @Secured($AUTHZ)
+          @RequestMapping(value=$VALUE,method=$HTTPMETHOD,...)
+          public $RETURNTYPE $METHOD(...) { ...}
+      - pattern: |
+          @RequestMapping(value=$VALUE,method=$HTTPMETHOD,...)
+          public $RETURNTYPE $METHOD(...) { ...}
+    - pattern-inside: |
+        @Controller
+        @RequestMapping(value = $SOMETHING)
+        public class $CONTROLLER { ... }
+  message: |
+    $METHOD(),$PATH,$HTTPMETHOD,$AUTHZ
+  fix: |
+    
+  severity: WARNING
