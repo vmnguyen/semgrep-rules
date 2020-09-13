@@ -1,0 +1,9 @@
+rules:
+- id: java-base64-detected
+  languages: [java]
+  pattern: |
+    import java.util.Base64;
+  message: |
+    "Found Base64 import"
+  severity: WARNING
+
